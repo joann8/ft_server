@@ -1,7 +1,7 @@
 server {
 	listen 80;
 	listen [::]:80;
-	server_name ft_server www.ft_server;
+	server_name ft_server;
 	return 301 https://$host$request_uri;
 }
 
@@ -9,18 +9,17 @@ server {
 server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
-	server_name ft_server www.ft_server;
+	server_name ft_server;
 
-	ssl on;
 	ssl_certificate /etc/ssl/nginx-selfsigned.pem;
 	ssl_certificate_key /etc/ssl/nginx-selfsigned.key;
 
 	root /var/www/ft_server;
-	autoindex on;
 	index index.php index.html index.htm index.nginx-debian.html;
 
 	server_name ft_server www.ft_server;
 	location / {
+		autoindex ${auto_index};
 		try_files $uri $uri/ =404;
 	}
 
