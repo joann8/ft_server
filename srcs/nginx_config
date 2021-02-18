@@ -11,21 +11,21 @@ server {
 	listen [::]:443 ssl;
 	server_name ft_server;
 
-	ssl_certificate /etc/ssl/nginx-selfsigned.pem;
-	ssl_certificate_key /etc/ssl/nginx-selfsigned.key;
+	ssl_certificate /etc/ssl/ft_server.pem;
+	ssl_certificate_key /etc/ssl/ft_server.key;
 
 	root /var/www/ft_server;
 	index index.php index.html index.htm index.nginx-debian.html;
 
-	server_name ft_server www.ft_server;
+	server_name ft_server;
+	
 	location / {
-		autoindex ${auto_index};
+		autoindex on;
 		try_files $uri $uri/ =404;
 	}
 
-	
 	location ~ \.php$ {
 		include snippets/fastcgi-php.conf;
-		fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+		fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
 	}
 }
